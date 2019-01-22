@@ -5,6 +5,7 @@ var item1 = document.getElementById('item1');
 var item2 = document.getElementById('item2');
 var item3 = document.getElementById('item3');
 var mainDiv = document.getElementById('mainDiv');
+var itemTable = document.getElementById('itemTable');
 var threePics = [item1, item2, item3];
 var randoArray = [];
 var storedArray = [];
@@ -42,6 +43,7 @@ function choose3Randos(){
     testArray.push(random);
   }
   testArray = [];
+  compare();
 }
 
 choose3Randos();
@@ -87,8 +89,18 @@ showItems();
 
 mainDiv.addEventListener('click', handleClick);
 
+function renderList() {
+  itemTable.textContent = '';
+  var li = document.createElement('li');
+  for (var p = 0; p < itemList.length; p++){
+    li = document.createElement('li');
+    li.textContent = allItems[p].votes + ' votes for the ' + descriptList[p] + '.';
+    itemTable.appendChild(li);
+  }
+}
+
 function handleClick(event) {
-  // storedArray = [];
+  storedArray = [];
   for(var o = 0; o < allItems.length; o++){
     if(allItems[o].name === event.target.alt){
       allItems[o].votes++;
@@ -103,6 +115,7 @@ function handleClick(event) {
   // views();
   if(voted > 25){
     mainDiv.removeEventListener('click', handleClick);
+    renderList();
   }
 }
 

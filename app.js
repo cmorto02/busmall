@@ -13,6 +13,8 @@ var voted = 0;
 
 var itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 
+var descriptList = ['R2D2 bag', 'banana slicer', 'ipad stand', 'boots', 'all-in-one breakfast', 'meatball bubblegum', 'redchair', 'cthulhu', 'doggie duck bill', 'dragon meat', 'uPENcils', 'pet sweeper', 'pizza scissors', 'shark sleeping bag', 'baby sweeper onsie', 'tauntaun blankie', 'unicorn meat', 'tentacle usb', 'useless watering can', 'useless wine glass'];
+
 function SaleItem(name) {
   this.filepath = `img/${name}.jpg`;
   this.name = name;
@@ -35,7 +37,6 @@ function choose3Randos(){
     var random = Math.floor(Math.random() * allItems.length);
     while (testArray.includes(random)){
       random = Math.floor(Math.random() * allItems.length);
-      console.log('duplicate caught');
     }
     randoArray.push(random);
     testArray.push(random);
@@ -87,17 +88,21 @@ showItems();
 mainDiv.addEventListener('click', handleClick);
 
 function handleClick(event) {
-  storedArray = [];
-  console.log(event.target.alt);
+  // storedArray = [];
   for(var o = 0; o < allItems.length; o++){
     if(allItems[o].name === event.target.alt){
       allItems[o].votes++;
     }
   }
   voted++;
-  storedArray.push(randoArray);
+  storedArray = randoArray;
+  console.log(storedArray);
   choose3Randos();
   compare();
   showItems();
   // views();
+  if(voted > 25){
+    mainDiv.removeEventListener('click', handleClick);
+  }
 }
+

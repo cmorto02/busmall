@@ -48,12 +48,6 @@ function choose3Randos(){
 
 choose3Randos();
 
-// function noSame() {
-//   for(var m = 0; m < threePics.length; m++){
-//     if(randoArray)
-//   }
-// }
-
 function compare() {
   if (voted > 0) {
     for(var k = 0; k < threePics.length; k++){
@@ -77,16 +71,6 @@ function showItems(){
 
 showItems();
 
-// function views() {
-//   if (voted > 0) {
-//     for( var l = 0; l < threePics.length; l++){
-//       itemList[storedArray[l]].views++;
-//     }
-//   }
-// }
-
-// views();
-
 mainDiv.addEventListener('click', handleClick);
 
 function renderList() {
@@ -108,11 +92,9 @@ function handleClick(event) {
   }
   voted++;
   storedArray = randoArray;
-  console.log(storedArray);
   choose3Randos();
   compare();
   showItems();
-  // views();
   if(voted > 25){
     mainDiv.removeEventListener('click', handleClick);
     renderList();

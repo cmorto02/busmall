@@ -6,11 +6,14 @@ var item2 = document.getElementById('item2');
 var item3 = document.getElementById('item3');
 var mainDiv = document.getElementById('mainDiv');
 var itemTable = document.getElementById('itemTable');
+var itemChart = document.getElementById('itemChart');
 var threePics = [item1, item2, item3];
 var randoArray = [];
 var storedArray = [];
 var testArray = [];
 var voted = 0;
+var chartVotes = [];
+var itemChart2;
 
 var itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 
@@ -71,6 +74,48 @@ function showItems(){
 
 showItems();
 
+function updateVoteArray(){
+  for (var q = 0; q < descriptList.length; q++){
+    chartVotes.push(allItems[q].votes);
+  }
+}
+
+var data = {
+  labels: descriptList,
+  datasets: [{
+    label: 'votes',
+    data: chartVotes,
+    backgroundColor: ['darkgray'
+    ],
+  }],
+};
+
+var options = {
+  scaleShowValues: true,
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true,
+      },
+    }],
+    xAxes: [{
+      ticks: {
+        autoSkip: false,
+      },
+    }],
+  },
+};
+
+
+function drawChart(){
+  var ctx = document.getElementById('itemChart').getContext('2d');
+  itemChart2 = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: options,
+  });
+}
+
 mainDiv.addEventListener('click', handleClick);
 
 function renderList() {
@@ -97,7 +142,9 @@ function handleClick(event) {
   showItems();
   if(voted > 25){
     mainDiv.removeEventListener('click', handleClick);
-    renderList();
+    // renderList();
+    updateVoteArray();
+    drawChart();
   }
 }
 
